@@ -1,4 +1,6 @@
 import { Image } from 'expo-image';
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
@@ -10,6 +12,19 @@ import { ThemedView } from '@/components/themed-view';
 const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyy';
 
 export default function HomeScreen() {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const requestTracking = async () => {
+      const { status } = await requestTrackingPermissionsAsync();
+      // Wait for the tracking permission request to finish, regardless of the user's choice,
+      // before rendering the ad. AdMob handles the rest based on tracking auth.
+      setIsReady(true);
+    };
+
+    requestTracking();
+  }, []);
+
   return (
     <View style={styles.container}>
       <ParallaxScrollView
@@ -34,13 +49,15 @@ export default function HomeScreen() {
 
       {/* AdMob Banner at the bottom */}
       <View style={styles.adContainer}>
-        <BannerAd
-          unitId={adUnitId}
-          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-          requestOptions={{
-            requestNonPersonalizedAdsOnly: true,
-          }}
-        />
+        {isReady && (
+          <BannerAd
+            unitId={adUnitId}
+            size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+            requestOptions={{
+              requestNonPersonalizedAdsOnly: true,
+            }}
+          />
+        )}
       </View>
     </View>
   );

@@ -22,6 +22,11 @@ export default function HomeScreen() {
 
       // Wait for the tracking permission request to finish, regardless of the user's choice,
       // before initializing the SDK. App must obtain consent before initialization if required.
+      console.log('Configuring test device...');
+      await mobileAds().setRequestConfiguration({
+        testDeviceIdentifiers: ['EMULATOR'],
+      });
+
       console.log('Initializing AdMob SDK...');
       await mobileAds().initialize();
       console.log('AdMob initialization complete');

@@ -2,7 +2,7 @@ import { Image } from 'expo-image';
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import mobileAds, { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
 import { HelloWave } from '@/components/hello-wave';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
@@ -16,9 +16,16 @@ export default function HomeScreen() {
 
   useEffect(() => {
     const requestTracking = async () => {
+      console.log('Requesting ATT permission...');
       const { status } = await requestTrackingPermissionsAsync();
+      console.log('ATT status:', status);
+
       // Wait for the tracking permission request to finish, regardless of the user's choice,
-      // before rendering the ad. AdMob handles the rest based on tracking auth.
+      // before initializing the SDK. App must obtain consent before initialization if required.
+      console.log('Initializing AdMob SDK...');
+      await mobileAds().initialize();
+      console.log('AdMob initialization complete');
+
       setIsReady(true);
     };
 

@@ -1,17 +1,9 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import mobileAds from 'react-native-google-mobile-ads';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
-
-mobileAds()
-  .initialize()
-  .then(adapterStatuses => {
-    // Initialization complete!
-    console.log('AdMob initialization complete');
-  });
 
 export const unstable_settings = {
   anchor: '(tabs)',

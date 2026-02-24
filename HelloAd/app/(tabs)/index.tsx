@@ -56,6 +56,12 @@ export default function HomeScreen() {
             requestOptions={{
               requestNonPersonalizedAdsOnly: true,
             }}
+            onAdLoaded={() => {
+              console.log('BannerAd loaded successfully');
+            }}
+            onAdFailedToLoad={(error) => {
+              console.error('BannerAd failed to load: ', error);
+            }}
           />
         )}
       </View>

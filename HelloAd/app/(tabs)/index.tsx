@@ -2,14 +2,15 @@ import { Image } from 'expo-image';
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import mobileAds, { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import mobileAds, { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import { HelloWave } from '@/components/hello-wave';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 
-const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyy';
+// Force the specific test banner ID to ensure it is correctly formatted
+const adUnitId = 'ca-app-pub-3940256099942544/2934735716';
 
 export default function HomeScreen() {
   const [isReady, setIsReady] = useState(false);
